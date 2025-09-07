@@ -45,6 +45,7 @@ const Contact = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     }
+    const api = import.meta.env.BACKEND_URL;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -53,7 +54,7 @@ const Contact = () => {
         const loadingToast = toast.loading('Sending message...');
         setIsSubmitting(true);
         try {
-            const response = await fetch("https://porfolio-suup.onrender.com/api/send" , {
+            const response = await fetch(`${api}/api/send`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
@@ -384,8 +385,8 @@ const Contact = () => {
                                 type="submit"
                                 disabled={isSubmitting}
                                 className={`submit-button w-full font-semibold py-3 px-6 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center gap-2 ${isSubmitting
-                                        ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                                        : 'bg-white text-black hover:bg-gray-100'
+                                    ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                                    : 'bg-white text-black hover:bg-gray-100'
                                     }`}
                             >
                                 {isSubmitting && (
