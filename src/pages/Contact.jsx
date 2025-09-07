@@ -45,7 +45,7 @@ const Contact = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     }
-    const api = import.meta.env.BACKEND_URL;
+    const api = import.meta.env.VITE_BACKEND_URL;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
