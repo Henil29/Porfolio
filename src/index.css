@@ -13,10 +13,12 @@ body {
     width: 100%;
     font-family: "Inter", sans-serif;
 }
-html{
+
+html {
     scroll-behavior: smooth;
     scroll-padding-top: 100px;
 }
+
 body {
     background-color: black;
     /* background: url(https://wallpapers.com/images/hd/action-anime-7xja3riy0wtmposg.jpg); */
@@ -389,7 +391,10 @@ body {
     background-color: black !important;
 }
 
-.heading,.ex-heading,.skill-heading,.education-title {
+.heading,
+.ex-heading,
+.skill-heading,
+.education-title {
     font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 50px;
@@ -422,25 +427,6 @@ body {
 }
 
 
-/* for skills styling */
-
-.skills {
-    margin-top: 20px;
-    font-weight: 500;
-    color: aliceblue !important;
-}
-
-.skill-list {
-    margin-top: 10px;
-}
-
-.skill-list li {
-    background-color: #27272a99;
-    padding: 5px 10px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    color: #c4d6dc !important;
-}
 
 /* for large screen */
 @media screen and (min-width: 1025px) {
@@ -499,13 +485,34 @@ body {
         font-size: 0.9rem;
     }
 
-    /* set date and role flex row */
-    .experience-section .experience-list .experience-item div {
+    /* set date and role vertical on small screens */
+    .experience-section .experience-list .experience-item .role-date {
         flex-direction: column;
         align-items: flex-start;
         gap: 5px;
     }
 
+
+}
+
+/* for skills styling */
+
+.skills {
+    margin-top: 20px;
+    font-weight: 500;
+    color: aliceblue !important;
+}
+
+.skill-list {
+    margin-top: 10px;
+}
+
+.skill-list li {
+    background-color: #27272a99;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #c4d6dc !important;
 }
 
 /* education section */
@@ -719,9 +726,11 @@ body {
         margin-top: 60px;
         margin-bottom: 50px;
     }
+
     .project-card img {
         height: 200px;
     }
+
     .project-section .project-list .project-item .title {
         font-size: 1.1rem;
     }
@@ -736,20 +745,24 @@ body {
     width: 100%;
     margin-bottom: 100px;
 }
+
 .contact-section .contact-title {
     font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 50px;
 }
-.section-heading{
+
+.section-heading {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 20px;
 }
-.contact-item{
+
+.contact-item {
     margin-bottom: 10px;
 }
-.form-input{
+
+.form-input {
     background-color: #27272a99;
     border: none;
     border-radius: 8px;
@@ -759,10 +772,12 @@ body {
     box-sizing: border-box;
     margin-bottom: 15px;
 }
-.form-element label{
+
+.form-element label {
     margin-bottom: 8px;
 }
-.submit-button{
+
+.submit-button {
     background-color: #3b82f6;
     color: white !important;
     padding: 10px 15px;
@@ -771,11 +786,13 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-textarea{
+
+textarea {
     resize: none;
     height: 100px;
 }
-.submit-button:hover{
+
+.submit-button:hover {
     background-color: #2064d1;
     color: white !important;
     transition: background-color 0.3s ease;
@@ -787,6 +804,7 @@ textarea{
         padding: 0 250px;
     }
 }
+
 /* for medium screen */
 @media screen and (max-width: 1024px) and (min-width: 769px) {
     .contact-section {
@@ -795,6 +813,7 @@ textarea{
         margin-bottom: 80px;
     }
 }
+
 /* for small screen */
 @media screen and (max-width: 768px) {
     .contact-section {
@@ -804,7 +823,7 @@ textarea{
     }
 }
 
-.footer{
+.footer {
     padding: 60px 0 0 0;
 
     /* footer must be in bottom */
@@ -819,5 +838,5 @@ textarea{
     border-top: 1px solid #7c879a;
     padding-top: 20px;
     background-color: black !important;
-    
+
 }

@@ -42,8 +42,8 @@ const Experience = () => {
             let tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: card,
-                    start: "top 80%",   // when card enters
-                    end: "top -20%",    // when card leaves
+                    start: "top 90%",   // when card enters
+                    end: "top -2 90%",    // when card leaves
                     scrub: true,
                 }
             });
@@ -77,7 +77,7 @@ const Experience = () => {
             <div className="experience-list flex flex-col gap-8">
                 {experience.map((exp, index) => (
                     <div key={index} className="experience-item border-l-4 border-blue-500 pl-4 card">
-                        <div className="flex justify-between items-center">
+                        <div className="role-date flex justify-between items-center">
                             <div className="type font-semibold text-lg">{exp.type}</div>
                             <div className="date text-sm text-gray-400">{exp.date}</div>
                         </div>

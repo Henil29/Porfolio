@@ -41,8 +41,9 @@ const Projects = () => {
         ease: "power2.out",
         scrollTrigger: {
           trigger: ".project-section",
-          start: "top 80%",
-          toggleActions: "play none none reverse"
+          start: "top 90%",
+          end: "top 60%",
+          toggleActions: "play none none reverse",
         }
       }
     );

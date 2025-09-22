@@ -397,13 +397,12 @@ const Contact = () => {
                         </form>
                     </div>
                 </div>
-
-                {/* Footer */}
-                <div className="text-center border-gray-800 footer">
-                    <p className="text-gray-400 text-sm">
-                        © 2025 Haque. All rights reserved.
-                    </p>
-                </div>
+            </div>
+            {/* Footer */}
+            <div className="text-center border-gray-800 footer">
+                <p className="text-gray-400 text-sm">
+                    © 2025 Henil. All rights reserved.
+                </p>
             </div>
         </div>
     );
