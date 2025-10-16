@@ -8,19 +8,6 @@ const Experience = () => {
 
     const experience = [
         {
-            type: "Full Stack Developer Intern",
-            company: "MERU FinTech",
-            date: "Aug 2025- Present",
-            description: [
-                "Contributing to the development of scalable web applications using React.js, Node.js/Express, and MongoDB.",
-                "Built and optimized REST APIs to support financial workflows.",
-                "Implemented secure authentication and authorization for users.",
-                "Worked with third-party APIs to integrate payment and fintech-related features.",
-                "Improved performance and user experience through responsive UI with Tailwind CSS."
-            ],
-            skill: ["React", "JavaScript (ES6+)", "Tailwind CSS", "Node.js", "Express.js", "MongoDB", "Mongoose", "MySQL", "Git", "Postman"]
-        },
-        {
             type: "Self Experience (Personal Projects / Freelance)",
             company: "MERN Stack Developer (Self Projects)",
             date: "2024 - Present",

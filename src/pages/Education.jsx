@@ -7,17 +7,17 @@ const Education = () => {
     const education = [
         {
             img: "🎓",
-            university: "Maulana Azad National Urdu University, Hyderabad",
-            degree: "B.Tech (Lateral Entry), Computer Science",
-            date: "Oct 2022 - May 2025",
-            cgpa: "8.71/10",
+            university: "LJ Institute of Engineering and Technology, Ahmedabad",
+            degree: "BE Computer Science",
+            date: "Aug 2023 - Jun 2027",
+            cgpa: "8.17/10",
         },
         {
             img: "🏫",
-            university: "Maulana Azad National Urdu University, Hyderabad",
-            degree: "Diploma in Computer Science and Engineering",
-            date: "Aug 2019 - Jun 2022",
-            cgpa: "9.78/10",
+            university: "Gondal Gurukul",
+            degree: "SSC,HSC Science",
+            date: "May 2019 - March 2023",
+            cgpa: "76/100",
         },
     ];
 
