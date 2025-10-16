@@ -79,6 +79,7 @@ const Contact = () => {
                     duration: 4000,
                     position: 'top-center',
                 });
+                setIsSubmitting(false);
                 console.error("Error:", data.error);
             }
         } catch (error) {
@@ -88,6 +89,7 @@ const Contact = () => {
                 duration: 4000,
                 position: 'top-center',
             });
+            setIsSubmitting(false);
             console.error("Error sending mail:", error);
         }
     };
