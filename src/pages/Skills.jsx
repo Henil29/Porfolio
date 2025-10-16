@@ -81,240 +81,202 @@ const Skills = () => {
     gsap.registerPlugin(ScrollTrigger);
 
     useGSAP(() => {
-        // Animate main heading
-        gsap.fromTo(".skill-heading",
-            {
-                y: 50,
-                opacity: 0
-            },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: ".skill-section",
-                    start: "top 85%",
-                    toggleActions: "play none none reverse"
-                }
-            }
-        );
-
-        // Animate subtitle text
-        gsap.fromTo(".heading-text",
-            {
-                y: 30,
-                opacity: 0
-            },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                delay: 0.2,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: ".skill-section",
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
-                }
-            }
-        );
-
-        // Animate skill categories with stagger
-        gsap.fromTo(".skill-category",
-            {
-                y: 80,
-                opacity: 0
-            },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-                ease: "power2.out",
-                stagger: 0.2,
-                scrollTrigger: {
-                    trigger: ".skill-categories",
-                    start: "top 85%",
-                    toggleActions: "play none none reverse"
-                }
-            }
-        );
-
-        // Animate category titles
-        gsap.fromTo(".skill-category h3",
-            {
-                x: -30,
-                opacity: 0
-            },
-            {
-                x: 0,
-                opacity: 1,
-                duration: 0.6,
-                ease: "power2.out",
-                stagger: 0.1,
-                scrollTrigger: {
-                    trigger: ".skill-category",
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
-                }
-            }
-        );
-
-        // Animate skill icons with wave effect
-        gsap.fromTo(".skill-icon",
-            {
-                scale: 0,
-                opacity: 0,
-                rotation: -180
-            },
-            {
-                scale: 1,
-                opacity: 1,
-                rotation: 0,
-                duration: 0.6,
-                ease: "back.out(1.7)",
-                stagger: {
-                    amount: 0.8,
-                    from: "start"
-                },
-                scrollTrigger: {
-                    trigger: ".skill-category",
-                    start: "top 75%",
-                    toggleActions: "play none none reverse"
-                }
-            }
-        );
-
-        // Animate icon wrappers separately for more control
-        gsap.fromTo(".icon-wrapper",
-            {
-                scale: 0.8,
-                backgroundColor: "#404040"
-            },
-            {
-                scale: 1,
-                backgroundColor: "#262626",
-                duration: 0.5,
-                ease: "power2.out",
-                stagger: 0.05,
-                delay: 0.3,
-                scrollTrigger: {
-                    trigger: ".skill-category",
-                    start: "top 75%",
-                    toggleActions: "play none none reverse"
-                }
-            }
-        );
-
-        // Animate skill names
-        gsap.fromTo(".skill-icon span",
-            {
-                y: 10,
-                opacity: 0
-            },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 0.4,
-                ease: "power2.out",
-                stagger: 0.03,
-                delay: 0.6,
-                scrollTrigger: {
-                    trigger: ".skill-category",
-                    start: "top 75%",
-                    toggleActions: "play none none reverse"
-                }
-            }
-        );
-
-        // Enhanced hover animations for icon wrappers
-        gsap.utils.toArray(".icon-wrapper").forEach((icon, index) => {
-            const skillIcon = icon.closest('.skill-icon');
-            const skillName = skillIcon.querySelector('span');
-
-            icon.addEventListener("mouseenter", () => {
-                gsap.to(icon, {
-                    y: -10,
-                    scale: 1.1,
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-
-                gsap.to(skillName, {
-                    scale: 1.05,
-                    color: "#ffffff",
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-
-                // Add a subtle glow effect
-                gsap.to(icon, {
-                    boxShadow: "0 0 20px rgba(255, 255, 255, 0.2)",
-                    duration: 0.3
-                });
-            });
-
-            icon.addEventListener("mouseleave", () => {
-                gsap.to(icon, {
-                    y: 0,
-                    scale: 1,
-                    backgroundColor: "#262626",
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-
-                gsap.to(skillName, {
-                    scale: 1,
-                    color: "#e5e5e5",
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-
-                // Remove glow effect
-                gsap.to(icon, {
-                    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                    duration: 0.3
-                });
-            });
-        });
-
-        // Add a floating animation for icons (subtle continuous movement)
-        gsap.utils.toArray(".icon-wrapper img").forEach((img, index) => {
-            gsap.to(img, {
-                y: -3,
-                duration: 2 + (index % 3) * 0.5,
-                ease: "power2.inOut",
-                yoyo: true,
-                repeat: -1,
-                delay: index * 0.1
-            });
-        });
-
-        // Create a timeline for the entire section reveal
-        const skillsTimeline = gsap.timeline({
+    // Animate main heading
+    gsap.fromTo(".skill-heading",
+        { y: 50, opacity: 0 },
+        {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "power2.out",
             scrollTrigger: {
                 trigger: ".skill-section",
-                start: "top 90%",
-                end: "bottom 20%",
-                toggleActions: "play none none reverse"
-            }
+                start: "top 85%",
+                toggleActions: "play none none none", // ✅ play once only
+                once: true,
+            },
+        }
+    );
+
+    // Animate subtitle text
+    gsap.fromTo(".heading-text",
+        { y: 30, opacity: 0 },
+        {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            delay: 0.2,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".skill-section",
+                start: "top 80%",
+                toggleActions: "play none none none",
+                once: true,
+            },
+        }
+    );
+
+    // Animate skill categories with stagger
+    gsap.fromTo(".skill-category",
+        { y: 80, opacity: 0 },
+        {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power2.out",
+            stagger: 0.2,
+            scrollTrigger: {
+                trigger: ".skill-categories",
+                start: "top 85%",
+                toggleActions: "play none none none",
+                once: true,
+            },
+        }
+    );
+
+    // Animate category titles
+    gsap.fromTo(".skill-category h3",
+        { x: -30, opacity: 0 },
+        {
+            x: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: "power2.out",
+            stagger: 0.1,
+            scrollTrigger: {
+                trigger: ".skill-category",
+                start: "top 80%",
+                toggleActions: "play none none none",
+                once: true,
+            },
+        }
+    );
+
+    // Animate skill icons with wave effect
+    gsap.fromTo(".skill-icon",
+        { scale: 0, opacity: 0, rotation: -180 },
+        {
+            scale: 1,
+            opacity: 1,
+            rotation: 0,
+            duration: 0.6,
+            ease: "back.out(1.7)",
+            stagger: { amount: 0.8, from: "start" },
+            scrollTrigger: {
+                trigger: ".skill-category",
+                start: "top 75%",
+                toggleActions: "play none none none",
+                once: true,
+            },
+        }
+    );
+
+    // Animate icon wrappers
+    gsap.fromTo(".icon-wrapper",
+        { scale: 0.8, backgroundColor: "#404040" },
+        {
+            scale: 1,
+            backgroundColor: "#262626",
+            duration: 0.5,
+            ease: "power2.out",
+            stagger: 0.05,
+            delay: 0.3,
+            scrollTrigger: {
+                trigger: ".skill-category",
+                start: "top 75%",
+                toggleActions: "play none none none",
+                once: true,
+            },
+        }
+    );
+
+    // Animate skill names
+    gsap.fromTo(".skill-icon span",
+        { y: 10, opacity: 0 },
+        {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            ease: "power2.out",
+            stagger: 0.03,
+            delay: 0.6,
+            scrollTrigger: {
+                trigger: ".skill-category",
+                start: "top 75%",
+                toggleActions: "play none none none",
+                once: true,
+            },
+        }
+    );
+
+    // Hover animations (keep interactive)
+    gsap.utils.toArray(".icon-wrapper").forEach((icon) => {
+        const skillIcon = icon.closest(".skill-icon");
+        const skillName = skillIcon.querySelector("span");
+
+        icon.addEventListener("mouseenter", () => {
+            gsap.to(icon, {
+                y: -10,
+                scale: 1.1,
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                boxShadow: "0 0 20px rgba(255, 255, 255, 0.2)",
+                duration: 0.3,
+                ease: "power2.out",
+            });
+
+            gsap.to(skillName, {
+                scale: 1.05,
+                color: "#ffffff",
+                duration: 0.3,
+                ease: "power2.out",
+            });
         });
 
-        // Add a subtle background pulse effect
-        skillsTimeline.to(".skill-section", {
-            backgroundColor: "#0a0a0a",
-            duration: 2,
+        icon.addEventListener("mouseleave", () => {
+            gsap.to(icon, {
+                y: 0,
+                scale: 1,
+                backgroundColor: "#262626",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                duration: 0.3,
+                ease: "power2.out",
+            });
+
+            gsap.to(skillName, {
+                scale: 1,
+                color: "#e5e5e5",
+                duration: 0.3,
+                ease: "power2.out",
+            });
+        });
+    });
+
+    // Floating animation (continuous)
+    gsap.utils.toArray(".icon-wrapper img").forEach((img, index) => {
+        gsap.to(img, {
+            y: -3,
+            duration: 2 + (index % 3) * 0.5,
             ease: "power2.inOut",
             yoyo: true,
-            repeat: -1
+            repeat: -1,
+            delay: index * 0.1,
         });
+    });
 
-    }, []);
+    // Optional: Section-wide background pulse (looping, keep it if you want)
+    gsap.to(".skill-section", {
+        backgroundColor: "#0a0a0a",
+        duration: 2,
+        ease: "power2.inOut",
+        yoyo: true,
+        repeat: -1,
+    });
+}, []);
+
 
 
     return (
-        <div className='skill-section w-full px-4 sm:px-6 lg:px-8 py-12 bg-black text-white' id='skills'>
+    <div className='skill-section w-full px-5 md:px-[50px] xl:px-[250px] py-12 bg-black text-white' id='skills'>
             <h2 className="text-3xl font-bold skill-heading">My Skills</h2>
             <p className="text-gray-400 mb-16 text-lg heading-text">
                 Technologies and tools I've worked with throughout my projects and experience

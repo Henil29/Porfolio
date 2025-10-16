@@ -24,36 +24,36 @@ const Education = () => {
     gsap.registerPlugin(ScrollTrigger);
 
     useGSAP(() => {
-        
         gsap.from(".education-item", {
             opacity: 0,
             x: -100,
             duration: 2,
+            ease: "power2.out",
             scrollTrigger: {
                 trigger: ".education-section",
-                scroller: "body",
                 start: "top 85%",
-                end: "top 55%",
-                scrub: 2,
-            }
-        })
+                toggleActions: "play none none none", // ✅ play once
+                once: true, // ✅ ensures it doesn't replay
+            },
+        });
+
         gsap.from(".education-title", {
             opacity: 0,
             y: -50,
             duration: 1.5,
+            ease: "power2.out",
             scrollTrigger: {
-                trigger: ".experience-section",
-                scroller: "body",
+                trigger: ".education-section",
                 start: "top 90%",
-                end: "top 40%",
-                scrub: 1,
-            }
-        })
+                toggleActions: "play none none none", // ✅ play once
+                once: true,
+            },
+        });
+    });
 
-    })
 
     return (
-        <div className="education-section w-full flex flex-col px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 bg-black text-white" id='education'>
+        <div className="education-section w-full flex flex-col px-5 md:px-[50px] xl:px-[250px] py-12 lg:py-16 bg-black text-white" id='education'>
             {/* Title */}
             <div className="education-title text-3xl font-bold mb-8">
                 Education
@@ -67,7 +67,7 @@ const Education = () => {
                         className="education-item flex items-start gap-4"
                     >
                         {/* Icon */}
-                        <div className="icon w-10 h-10 flex items-center justify-center rounded-full bg-gray-600 text-xl">
+                        <div className="icon w-10 h-10 aspect-square flex items-center justify-center rounded-full overflow-hidden bg-gray-600 text-xl leading-none shrink-0">
                             {edu.img}
                         </div>
 

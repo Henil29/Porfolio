@@ -95,163 +95,106 @@ const Contact = () => {
     gsap.registerPlugin(ScrollTrigger);
 
     useGSAP(() => {
-        // Animate main heading
-        gsap.fromTo(".contact-title",
+        const tl = gsap.timeline({
+            defaults: { ease: "power2.out", duration: 0.8 },
+        });
+
+        // Animate contact title
+        tl.fromTo(".contact-title",
+            { y: 50, opacity: 0 },
             {
-                y: 50,
-                opacity: 0
-            },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                ease: "power2.out",
+                y: 0, opacity: 1, duration: 1,
                 scrollTrigger: {
                     trigger: ".contact-section",
                     start: "top 85%",
-                    toggleActions: "play none none reverse"
+                    toggleActions: "play none none none" // 👈 only once
                 }
             }
         );
 
         // Animate section headings
         gsap.fromTo(".section-heading",
+            { y: 30, opacity: 0 },
             {
-                y: 30,
-                opacity: 0
-            },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-                ease: "power2.out",
-                stagger: 0.2,
+                y: 0, opacity: 1, stagger: 0.2,
                 scrollTrigger: {
                     trigger: ".contact-content",
                     start: "top 80%",
-                    toggleActions: "play none none reverse"
+                    toggleActions: "play none none none" // 👈 only once
                 }
             }
         );
 
-        // Animate contact info items
+        // Animate contact items
         gsap.fromTo(".contact-item",
+            { x: -50, opacity: 0 },
             {
-                x: -50,
-                opacity: 0
-            },
-            {
-                x: 0,
-                opacity: 1,
-                duration: 0.6,
-                ease: "power2.out",
-                stagger: 0.1,
+                x: 0, opacity: 1, stagger: 0.1,
                 scrollTrigger: {
                     trigger: ".contact-info",
                     start: "top 80%",
-                    toggleActions: "play none none reverse"
+                    toggleActions: "play none none none" // 👈 only once
                 }
             }
         );
 
-        // Animate form elements
+        // Animate form fields
         gsap.fromTo(".form-element",
+            { y: 30, opacity: 0 },
             {
-                y: 30,
-                opacity: 0
-            },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 0.6,
-                ease: "power2.out",
-                stagger: 0.1,
+                y: 0, opacity: 1, stagger: 0.1,
                 scrollTrigger: {
                     trigger: ".contact-form",
                     start: "top 80%",
-                    toggleActions: "play none none reverse"
+                    toggleActions: "play none none none" // 👈 only once
                 }
             }
         );
 
-        // Animate submit button
+        // Submit button bounce
         gsap.fromTo(".submit-button",
+            { scale: 0.8, opacity: 0 },
             {
-                scale: 0.8,
-                opacity: 0
-            },
-            {
-                scale: 1,
-                opacity: 1,
-                duration: 0.6,
+                scale: 1, opacity: 1, duration: 0.6,
                 ease: "back.out(1.7)",
                 delay: 0.5,
                 scrollTrigger: {
                     trigger: ".contact-form",
                     start: "top 70%",
-                    toggleActions: "play none none reverse"
+                    toggleActions: "play none none none" // 👈 only once
                 }
             }
         );
 
-        // Add hover animations for contact items
+        // --- Hover Animations ---
         gsap.utils.toArray(".contact-item").forEach((item) => {
             const icon = item.querySelector(".contact-icon");
-
             item.addEventListener("mouseenter", () => {
-                gsap.to(icon, {
-                    scale: 1.1,
-                    backgroundColor: "#374151",
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-                gsap.to(item, {
-                    x: 10,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
+                gsap.to(icon, { scale: 1.1, backgroundColor: "#374151", duration: 0.3 });
+                gsap.to(item, { x: 10, duration: 0.3 });
             });
-
             item.addEventListener("mouseleave", () => {
-                gsap.to(icon, {
-                    scale: 1,
-                    backgroundColor: "#1F2937",
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-                gsap.to(item, {
-                    x: 0,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
+                gsap.to(icon, { scale: 1, backgroundColor: "#1F2937", duration: 0.3 });
+                gsap.to(item, { x: 0, duration: 0.3 });
             });
         });
 
-        // Form input focus animations
+        // --- Input Focus Animations ---
         gsap.utils.toArray(".form-input").forEach((input) => {
             input.addEventListener("focus", () => {
-                gsap.to(input, {
-                    scale: 1.02,
-                    borderColor: "#3B82F6",
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
+                gsap.to(input, { scale: 1.02, borderColor: "#3B82F6", duration: 0.3 });
             });
-
             input.addEventListener("blur", () => {
-                gsap.to(input, {
-                    scale: 1,
-                    borderColor: "#374151",
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
+                gsap.to(input, { scale: 1, borderColor: "#374151", duration: 0.3 });
             });
         });
 
     }, []);
 
+
+
     return (
-        <div className="contact-section w-full px-4 sm:px-6 lg:px-8 py-16 bg-black text-white" id='contact'>
+        <div className="contact-section w-full px-5 md:px-[50px] xl:px-[250px] py-16 bg-black text-white" id='contact'>
             {/* Toast Container */}
             <Toaster
                 toastOptions={{
@@ -399,7 +342,7 @@ const Contact = () => {
                 </div>
             </div>
             {/* Footer */}
-            <div className="text-center border-gray-800 footer">
+            <div className="text-center w-full mt-12 pt-5 border-t border-gray-800">
                 <p className="text-gray-400 text-sm">
                     © 2025 Henil. All rights reserved.
                 </p>

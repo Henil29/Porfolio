@@ -35,54 +35,53 @@ const Experience = () => {
 
     gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-    gsap.registerPlugin(ScrollTrigger);
-
     useGSAP(() => {
         gsap.utils.toArray(".card").forEach((card) => {
-            let tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 90%",   // when card enters
-                    end: "top -2 90%",    // when card leaves
-                    scrub: true,
-                }
-            });
-
-            tl.fromTo(card,
+            gsap.fromTo(card,
                 { opacity: 0.3, y: -30 },
-                { opacity: 1, y: 0, ease: "power2.out", duration: 1 }
-            ).to(card,
-                { opacity: 0.3, y: -30, ease: "power2.inOut", duration: 1 }
+                {
+                    opacity: 1,
+                    y: 0,
+                    ease: "power2.out",
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 90%",   // when card enters
+                        toggleActions: "play none none none", // ✅ play only once
+                        once: true, // ✅ ensures it doesn't repeat
+                    }
+                }
             );
         });
+
         gsap.from(".ex-heading", {
             opacity: 0,
             y: -50,
             duration: 1.5,
             scrollTrigger: {
                 trigger: ".experience-section",
-                scroller: "body",
                 start: "top 90%",
-                end: "top 40%",
-                scrub: 1,
+                toggleActions: "play none none none", // ✅ only plays once
+                once: true
             }
-        })
+        });
     }, []);
 
+
     return (
-        <div ref={containerRef} className="experience-section w-full flex flex-col px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16" id='experience'>
+        <div ref={containerRef} className="experience-section w-full flex flex-col px-5 md:px-[50px] xl:px-[250px] py-12 lg:py-16" id='experience'>
             <div className="ex-heading text-3xl font-bold mb-8">
                 Experience
             </div>
             <div className="experience-list flex flex-col gap-8">
                 {experience.map((exp, index) => (
                     <div key={index} className="experience-item border-l-4 border-blue-500 pl-4 card">
-                        <div className="role-date flex justify-between items-center">
+                        <div className="role-date flex flex-col sm:flex-row sm:items-center items-start justify-between gap-1 sm:gap-0">
                             <div className="type font-semibold text-lg">{exp.type}</div>
                             <div className="date text-sm text-gray-400">{exp.date}</div>
                         </div>
-                        <div className="company font-medium text-md text-gray-700">{exp.company}</div>
-                        <ul className="description list-disc list-inside mt-2 text-gray-600">
+                        <div className="company font-medium text-md text-gray-200">{exp.company}</div>
+                        <ul className="description list-disc list-inside mt-2 text-gray-300">
                             {exp.description.map((desc, idx) => (
                                 <li key={idx}>{desc}</li>
                             ))}
@@ -93,7 +92,7 @@ const Experience = () => {
                                 {exp.skill.map((skill, id) => (
                                     <li
                                         key={id}
-                                        className="skill-item bg-gray-100 text-gray-800 px-4 py-2 rounded-lg shadow-sm hover:bg-gray-200 transition"
+                                        className="skill-item bg-gray-800 text-gray-300 px-3 py-1.5 rounded-lg shadow-sm hover:bg-gray-700 transition"
                                     >
                                         {skill}
                                     </li>

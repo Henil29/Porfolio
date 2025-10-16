@@ -31,15 +31,14 @@ const Navbar = () => {
     }, [menuOpen]);
 
     return (
-        <div className="navbar">
-            <div className="nav1">
-                <div className="font-bold text-xl sm:text-2xl logo">
-                    <a href="#">
-                        Henil.
-                    </a>
+        <nav className="sticky top-0 z-50 w-full h-[70px] backdrop-blur-lg bg-white/0 select-none">
+            <div className="mx-auto flex items-center justify-between h-full gap-5 md:gap-12 px-5 md:px-[50px] xl:px-[250px]">
+                <div className="logo font-bold text-xl sm:text-2xl">
+                    <a href="#">Henil.</a>
                 </div>
-                <div className="flex gap-4 sm:gap-6 justify-center items-center">
-                    <ul className="hidden md:flex gap-4 lg:gap-6 menu">
+
+                <div className="flex items-center gap-4 sm:gap-6">
+                    <ul className="menu hidden md:flex gap-4 lg:gap-6">
                         <li><a href="#about" className="hover:text-purple-400 transition-colors">About</a></li>
                         <li><a href="#experience" className="hover:text-purple-400 transition-colors">Experience</a></li>
                         <li><a href="#education" className="hover:text-purple-400 transition-colors">Education</a></li>
@@ -48,19 +47,27 @@ const Navbar = () => {
                         <li><a href="#contact" className="hover:text-purple-400 transition-colors">Contact</a></li>
                     </ul>
 
-                    <div className="sidemenu">
-                        <div className="sidemenu__toggle" onClick={() => setMenuOpen(true)}>
-                            <Menu size={24} className="text-white hover:text-purple-400 transition-colors" />
-                        </div>
+                    {/* Mobile menu */}
+                    <div className="sidemenu md:hidden">
+                        <button aria-label="Open menu" onClick={() => setMenuOpen(true)} className="p-2 rounded hover:bg-white/10">
+                            <Menu size={24} className="text-white" />
+                        </button>
 
-                        <div className={`side-menu ${menuOpen ? 'open' : ''}`}>
-                            <div className="side-menu__list">
-                                <X
-                                    size={24}
-                                    onClick={() => setMenuOpen(false)}
-                                    className="text-white hover:text-purple-400 transition-colors cursor-pointer"
-                                />
-                                <ul className="space-y-4">
+                        {/* Overlay */}
+                        <div
+                            className={`${menuOpen ? 'fixed inset-0 bg-black/50 z-[90]' : 'hidden'}`}
+                            onClick={() => setMenuOpen(false)}
+                        />
+
+                        {/* Drawer */}
+                        <div
+                            className={`fixed top-0 right-0 h-screen w-full max-w-[300px] bg-black/90 text-white p-8 transition-transform duration-300 z-[100] ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+                        >
+                            <div className="flex flex-col gap-6 mt-2">
+                                <button aria-label="Close menu" onClick={() => setMenuOpen(false)} className="self-end p-2 rounded hover:bg-white/10">
+                                    <X size={24} className="text-white" />
+                                </button>
+                                <ul className="space-y-4 text-lg">
                                     <li><a href="#about" onClick={() => setMenuOpen(false)} className="block py-2 hover:text-purple-400 transition-colors">About</a></li>
                                     <li><a href="#experience" onClick={() => setMenuOpen(false)} className="block py-2 hover:text-purple-400 transition-colors">Experience</a></li>
                                     <li><a href="#education" onClick={() => setMenuOpen(false)} className="block py-2 hover:text-purple-400 transition-colors">Education</a></li>
@@ -73,7 +80,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </nav>
     )
 }
 
