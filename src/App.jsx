@@ -40,7 +40,7 @@ const App = () => {
   })
 
   return (
-    <div className="home max-w-full  bg-black text-white">
+  <div className="home max-w-full bg-black text-white pt-[70px]">
       <Navbar/>
       <main className="w-full">
         <HeroSection className='part'/>

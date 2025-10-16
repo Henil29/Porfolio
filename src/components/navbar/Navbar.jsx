@@ -31,7 +31,7 @@ const Navbar = () => {
     }, [menuOpen]);
 
     return (
-        <nav className="sticky top-0 z-50 w-full h-[70px] backdrop-blur-lg bg-white/0 select-none">
+        <nav className="fixed top-0 left-0 right-0 z-50 w-full h-[70px] backdrop-blur-lg bg-white/0 select-none">
             <div className="mx-auto flex items-center justify-between h-full gap-5 md:gap-12 px-5 md:px-[50px] xl:px-[250px]">
                 <div className="logo font-bold text-xl sm:text-2xl">
                     <a href="#">Henil.</a>
