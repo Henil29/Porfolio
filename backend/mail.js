@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -54,8 +55,46 @@ export const verifyEmailTransport = async () => {
     }
 };
 
+const sendWithResend = async ({ name, email, message }) => {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) throw new Error("RESEND_API_KEY not set");
+    const resend = new Resend(apiKey);
+
+    // choose from/to
+    const to = process.env.MAIL_TO || process.env.MAIL_USER;
+    const fromAddress = process.env.MAIL_FROM || "Portfolio <onboarding@resend.dev>";
+
+    const htmlTemplate = `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${name || "Not provided"}</p>
+        <p><strong>Email:</strong> ${email || "Not provided"}</p>
+        <p><strong>Message:</strong><br/>${(message || "No message").replace(/\n/g, "<br/>")}</p>
+    `;
+
+    const { error } = await resend.emails.send({
+        from: fromAddress,
+        to: [to],
+        reply_to: email || undefined,
+        subject: `New Portfolio Contact: ${name || "Anonymous"}`,
+        html: htmlTemplate,
+        text: `Name: ${name || "N/A"}\nEmail: ${email || "N/A"}\n\n${message || "No message"}`,
+    });
+
+    if (error) {
+        return { success: false, error: { message: error.message || "RESEND_SEND_FAILED" } };
+    }
+
+    return { success: true };
+};
+
 export const sendMail = async ({ name, email, message }) => {
   try {
+        if (process.env.RESEND_API_KEY) {
+            const r = await sendWithResend({ name, email, message });
+            if (!r.success) return r;
+            return { success: true, messageId: "resend", timestamp: new Date().toISOString() };
+        }
+
         const { transporter, config } = await pickWorkingTransporter();
 
     // HTML Email Template
