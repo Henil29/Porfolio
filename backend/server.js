@@ -13,7 +13,7 @@ dotenv.config({ path: path.resolve(__dirname, "..", ".env") });
 const app = express();
 app.use(cors());
 // Ensure preflight requests get proper CORS headers
-// app.options('*', cors());
+  app.options(/.*/, cors());
 app.use(express.json());
 
 
@@ -35,6 +35,14 @@ app.post("/api/send", async (req, res) => {
   }
 });
 
+// JSON 404 for any unknown /api/* route
+// app.use("/api", (req, res, next) => {
+//   if (req.method && req.path && req.path !== "/send") {
+//     return res.status(404).json({ message: "API route not found", path: req.originalUrl });
+//   }
+//   next();
+// });
+
 
 const clientDist = path.resolve(__dirname, "..", "dist");
 app.use(express.static(clientDist));
@@ -42,6 +50,15 @@ app.use(express.static(clientDist));
 app.get(/^(?!\/api).*/, (req, res) => {
   res.sendFile(path.join(clientDist, "index.html"));
 });
+
+// Generic error handler to ensure JSON responses for API errors
+// app.use((err, req, res, next) => {
+//   console.error("Server error:", err);
+//   if (req.originalUrl?.startsWith("/api")) {
+//     return res.status(500).json({ message: "Internal server error" });
+//   }
+//   next(err);
+// });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Backend running at http://localhost:${PORT}`));

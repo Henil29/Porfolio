@@ -60,8 +60,12 @@ const Contact = () => {
                 body: JSON.stringify(formData),
             });
 
+            // Be defensive: backend may return non-JSON (e.g., an HTML 404 page)
+            // const ct = response.headers.get('content-type') || '';
+            // const data = ct.includes('application/json')
+            //     ? await response.json()
+            //     : { error: await response.text() };
             const data = await response.json();
-
             if (response.ok) {
                 // Dismiss loading toast and show success
                 toast.dismiss(loadingToast);
