@@ -7,10 +7,17 @@ export const sendMail = async ({ name, email, message }) => {
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
       auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
       },
+        tls: {
+        rejectUnauthorized: false,
+      },
+      connectionTimeout: 10000,
     });
 
     // HTML Email Template
