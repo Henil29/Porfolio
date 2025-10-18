@@ -45,7 +45,7 @@ const Contact = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     }
-    const api = import.meta.env.VITE_BACKEND_URL;
+    const apiBase = '';
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -54,7 +54,7 @@ const Contact = () => {
         const loadingToast = toast.loading('Sending message...');
         setIsSubmitting(true);
         try {
-            const response = await fetch(`${api}/api/send`, {
+            const response = await fetch(`${apiBase}/api/send`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),

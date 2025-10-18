@@ -5,14 +5,15 @@ import { sendMail } from "./mail.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
-// Resolve project root and load the root .env explicitly so it works even if the
-// process is started from a different working directory
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, "..", ".env") });
 
 const app = express();
 app.use(cors());
+// Ensure preflight requests get proper CORS headers
+// app.options('*', cors());
 app.use(express.json());
 
 
@@ -35,12 +36,9 @@ app.post("/api/send", async (req, res) => {
 });
 
 
-// In production, serve the frontend build from /dist
 const clientDist = path.resolve(__dirname, "..", "dist");
 app.use(express.static(clientDist));
 
-// SPA fallback to index.html (after API routes)
-// Express 5 uses path-to-regexp v6; use a regex or (.*) pattern, not "*"
 app.get(/^(?!\/api).*/, (req, res) => {
   res.sendFile(path.join(clientDist, "index.html"));
 });
