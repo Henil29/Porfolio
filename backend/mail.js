@@ -3,15 +3,60 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+// Create a transporter with explicit SMTP settings and sensible timeouts
+const createTransporterCandidates = () => ([
+    // Preferred: SMTPS on 465
+    {
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: { user: process.env.MAIL_USER, pass: process.env.MAIL_PASS },
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 20000,
+        tls: { servername: "smtp.gmail.com" },
+    },
+    // Fallback: SMTP with STARTTLS on 587
+    {
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        requireTLS: true,
+        auth: { user: process.env.MAIL_USER, pass: process.env.MAIL_PASS },
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 20000,
+        tls: { servername: "smtp.gmail.com" },
+    }
+]);
+
+const pickWorkingTransporter = async () => {
+    const configs = createTransporterCandidates();
+    for (const cfg of configs) {
+        const transporter = nodemailer.createTransport(cfg);
+        try {
+            const ok = await transporter.verify();
+            if (ok === true) return { transporter, config: { port: cfg.port, secure: cfg.secure === true } };
+        } catch (e) {
+            // try next config
+        }
+    }
+    throw new Error("SMTP_VERIFY_FAILED");
+};
+
+export const verifyEmailTransport = async () => {
+    try {
+        const { transporter, config } = await pickWorkingTransporter();
+        const ok = await transporter.verify();
+        return { success: ok === true, used: config };
+    } catch (err) {
+        return { success: false, error: { message: err.message, code: err.code } };
+    }
+};
+
 export const sendMail = async ({ name, email, message }) => {
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS,
-      },
-    });
+        const { transporter, config } = await pickWorkingTransporter();
 
     // HTML Email Template
     const htmlTemplate = `
@@ -299,7 +344,13 @@ This message was sent through your portfolio contact form.
       }
     };
 
-    const info = await transporter.sendMail(mailOptions);
+        // Add a hard timeout around sendMail in case the provider hangs
+        const withTimeout = (p, ms) => new Promise((resolve, reject) => {
+            const t = setTimeout(() => reject(new Error("SMTP_TIMEOUT")), ms);
+            p.then(v => { clearTimeout(t); resolve(v); }).catch(e => { clearTimeout(t); reject(e); });
+        });
+
+        const info = await withTimeout(transporter.sendMail(mailOptions), 20000);
     
     return { 
       success: true, 
