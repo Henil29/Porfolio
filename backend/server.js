@@ -3,14 +3,22 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { sendMail } from "./mail.js";
 
-dotenv.config();
+import path from "path";
+import { fileURLToPath } from "url";
+// Resolve project root and load the root .env explicitly so it works even if the
+// process is started from a different working directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, "..", ".env") });
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Email Service is running");
+
+// Health endpoint for uptime/health checks
+app.get('/health', (_req, res) => {
+  res.status(200).json({ status: 'ok', time: new Date().toISOString() });
 });
 
 app.post("/api/send", async (req, res) => {
@@ -27,5 +35,15 @@ app.post("/api/send", async (req, res) => {
 });
 
 
+// In production, serve the frontend build from /dist
+const clientDist = path.resolve(__dirname, "..", "dist");
+app.use(express.static(clientDist));
 
-app.listen(5000, () => console.log("🚀 Backend running at http://localhost:5000"));
+// SPA fallback to index.html (after API routes)
+// Express 5 uses path-to-regexp v6; use a regex or (.*) pattern, not "*"
+app.get(/^(?!\/api).*/, (req, res) => {
+  res.sendFile(path.join(clientDist, "index.html"));
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🚀 Backend running at http://localhost:${PORT}`));
